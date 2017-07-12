@@ -7,12 +7,15 @@
 import numpy as np 
 	
 LEARNING_RATE = .05
+NUM_LAYERS = 3
 
 def main(): 
 	""" Runs helper functions """
 
+	n_neurons_each_layer = [2, 3, 1] 
+
 	X, y = get_input()
-	weights = initialize_weights()
+	weights = initialize_weights(n_neurons_each_layer[0], n_neurons_each_layer[1])
 	signal = calculate_signal(input, weights)
 	activation = activate_signal(input, weights) 
 
@@ -29,11 +32,17 @@ def get_input():
 	
 	return X, y.T
 
-def initialize_weights(): 
-	""" Returns random weights in interval [-1.0, 1.0) """ 
+def initialize_weights(n_neurons_current, n_neurons_next): 
+	""" 
+	Returns k x n matrix of random weights in interval [-1.0, 1.0) 
+	k = number of neurons in next layer	
+	n = number of neurons in current layer
+
+	Hidden layer will have 3 neurons    
+	""" 
 
 	np.random.seed(42)
-	return 2*np.random.random((3,2)) - 1 
+	return 2*np.random.random((n_neurons_next, n_neurons_current)) - 1 
 
 def sigmoid(signal):
 	"""
