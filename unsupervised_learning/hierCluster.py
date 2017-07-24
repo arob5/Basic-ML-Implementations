@@ -1,7 +1,7 @@
 '''
 hierCluster.py
 Purpose: Practicing hierarchical clustering in Euclidean Space
-Last Modified: 12/26/2016
+Last Modified: 7/23/2017
 Modified By: Andrew Roberts
 '''
 import math
@@ -10,8 +10,6 @@ def calcDist(index1, index2):
 	xDist = ( clusterList[index1].avg[0] - clusterList[index2].avg[0] ) ** 2
 	yDist = ( clusterList[index1].avg[1] - clusterList[index2].avg[1] ) ** 2
 	return math.sqrt(xDist + yDist) 
-
-
 
 class Cluster:
 	def __init__(self, vec, left=None, right=None, avg=[0.0,0.0], id=None):
