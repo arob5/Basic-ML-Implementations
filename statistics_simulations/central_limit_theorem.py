@@ -1,7 +1,7 @@
 '''
 CLT.py
 Simulation demonstrating Central Limit Theorem (Ran program with various samples sizes)
-Last Modified: 12/23/2016
+Last Modified: 7/25/2017
 Modified By: Andrew Roberts
 '''
 
