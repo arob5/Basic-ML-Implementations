@@ -11,45 +11,62 @@ class LinearRegression():
 	""" comment """
 	
 	def __init__(self):
-		num_obs = None 
 		coef = None
 		intercept = None
 		rss = None
 	
-	def calculate_params_basic(self, X, y):
-		self.num_obs = float(len(X))
+	@staticmethod
+	def calculate_params(X, y, method):
+		if method == "basic":
+			return LinearRegression.calculate_params_basic(X, y)
+		elif method == "vectorized":
+			return LinearRegression.calculate_params_vectorized(X, y)
+		else:
+			raise ValueError("Invalid method argument; must be \"basic\" or \"vectorized\"")
+	
+	@staticmethod
+	def calculate_params_basic(X, y):
+		num_obs = float(len(X))
 		sum_xy = (X*y).sum()
 		sum_x = X.sum()
 		sum_xx = (X*X).sum()
-		y_bar = (y.sum()) / self.num_obs
-		x_bar = (X.sum()) / self.num_obs
+		y_bar = (y.sum()) / num_obs
+		x_bar = (X.sum()) / num_obs
 
-		b_hat = sum_xy - (sum_x * y_bar)
+		b_hat = (sum_xy - (sum_x * y_bar)) / (sum_xx - (sum_x * x_bar))
 		a_hat = y_bar - (b_hat * x_bar)
-		
 		return np.array([a_hat, b_hat])
+
+	@staticmethod
+	def calculate_params_vectorized(X, y):
+		X = np.array([np.ones(len(X)), X[:,0]]).T
+		y = y.reshape(-1, 1)		
+		return np.linalg.solve(X.T.dot(X), X.T.dot(y)).flatten()
 
 	# Add vectorized and gradient descent
 	def fit(self, X, y=None, method="basic"):
-		if y == None:
+		if y is None:
 			if X.shape[1] == 1:
 				raise ValueError("If no y is provided, X must have 2 columns")
-			params = self.calculate_params_basic(X[:,:-1], X[-1])
+			params = LinearRegression.calculate_params(X[:,:-1], X[-1], method)
 		else:
-			params = self.calculate_params_basic(X, y)
+			params = LinearRegression.calculate_params(X, y, method)
 
 		self.intercept = params[0]
 		self.coef = params[1]
 
 
-		
 fit1 = LinearRegression()
 fit1.fit(np.array([0,1,2,3,4,5,6]).reshape(7,1), np.array([0,2,4,6,8,10,12]).reshape(7,1))
-print(fit1.num_obs)
 print(fit1.coef)
 print(fit1.intercept)
+'''	
 	
+fit2 = LinearRegression()
+fit2.fit(np.array([0,1,2,3,4,5,6]).reshape(7,1), np.array([0,2,4,6,8,10,12]).reshape(7,1), "vectorized")
+print(fit2.coef)
+print(fit2.intercept)
 			
-	
+'''	
 	
 
