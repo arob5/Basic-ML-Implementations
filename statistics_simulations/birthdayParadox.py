@@ -34,7 +34,7 @@ def found_match(birthday_list, n_people):
 
 
 # Generate random birthdays for 100 people
-birthdays = [(str(random.randint(1,12)) + "/" + str(random.randint(1, 31))) for i in range(100)]
+birthdays = [(str(random.randint(1,12)) + "/" + str(random.randint(1, 31))) for i in range(1000)]
 
 # Run simulation over various values of n (number of people)
 n = 23
